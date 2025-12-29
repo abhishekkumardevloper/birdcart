@@ -26,14 +26,16 @@ const CartPage = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center max-w-md mx-auto px-4">
           <ShoppingBag className="w-24 h-24 mx-auto mb-6 text-gray-300" />
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Your Cart is Empty</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            Your Cart is Empty
+          </h2>
           <p className="text-gray-600 mb-8">
-            Looks like you haven't added anything to your cart yet. Start shopping now!
+            Looks like you haven't added anything to your cart yet.
           </p>
           <Button
             asChild
             size="lg"
-            className="bg-emerald-600 hover:bg-emerald-700"
+            style={{ backgroundColor: '#2C68B0' }}
           >
             <Link to="/products">
               Start Shopping <ArrowRight className="ml-2 w-5 h-5" />
@@ -47,7 +49,9 @@ const CartPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Shopping Cart</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+          Shopping Cart
+        </h1>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Cart Items */}
@@ -73,12 +77,16 @@ const CartPage = () => {
                 <div className="flex-1 space-y-2">
                   <Link
                     to={`/product/${item.id}`}
-                    className="font-semibold text-gray-900 hover:text-emerald-600 transition-colors"
+                    className="font-semibold text-gray-900 transition-colors"
+                    style={{ color: '#2C68B0' }}
                   >
                     {item.name}
                   </Link>
+
                   <div className="flex items-center gap-2">
-                    <span className="text-lg font-bold text-gray-900">₹{item.price}</span>
+                    <span className="text-lg font-bold text-gray-900">
+                      ₹{item.price}
+                    </span>
                     {item.originalPrice && (
                       <span className="text-sm text-gray-500 line-through">
                         ₹{item.originalPrice}
@@ -86,30 +94,37 @@ const CartPage = () => {
                     )}
                   </div>
 
-                  {/* Quantity Controls */}
+                  {/* Quantity */}
                   <div className="flex items-center gap-4">
                     <div className="flex items-center border border-gray-300 rounded-lg">
                       <button
-                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                        className="p-2 hover:bg-gray-50 transition-colors"
+                        onClick={() =>
+                          updateQuantity(item.id, item.quantity - 1)
+                        }
+                        className="p-2 hover:bg-gray-50"
                         disabled={item.quantity <= 1}
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-                      <span className="px-4 font-medium">{item.quantity}</span>
+                      <span className="px-4 font-medium">
+                        {item.quantity}
+                      </span>
                       <button
-                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                        className="p-2 hover:bg-gray-50 transition-colors"
+                        onClick={() =>
+                          updateQuantity(item.id, item.quantity + 1)
+                        }
+                        className="p-2 hover:bg-gray-50"
                       >
                         <Plus className="w-4 h-4" />
                       </button>
                     </div>
+
                     <button
                       onClick={() => {
                         removeFromCart(item.id);
                         toast.success('Removed from cart');
                       }}
-                      className="text-red-500 hover:text-red-600 transition-colors flex items-center gap-1"
+                      className="text-red-500 hover:text-red-600 flex items-center gap-1"
                     >
                       <Trash2 className="w-4 h-4" />
                       <span className="text-sm">Remove</span>
@@ -128,69 +143,77 @@ const CartPage = () => {
             ))}
           </div>
 
-          {/* Order Summary */}
+          {/* Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg p-6 sticky top-24">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Order Summary</h2>
-              
+              <h2 className="text-xl font-bold text-gray-900 mb-6">
+                Order Summary
+              </h2>
+
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Subtotal</span>
-                  <span className="font-medium">₹{getCartTotal().toFixed(2)}</span>
+                  <span className="font-medium">
+                    ₹{getCartTotal().toFixed(2)}
+                  </span>
                 </div>
+
                 <div className="flex justify-between">
                   <span className="text-gray-600">Shipping</span>
                   <span className="font-medium">
                     {shipping === 0 ? (
-                      <span className="text-green-600">FREE</span>
+                      <span style={{ color: '#2C68B0' }}>FREE</span>
                     ) : (
                       `₹${shipping}`
                     )}
                   </span>
                 </div>
+
                 {discount > 0 && (
-                  <div className="flex justify-between text-green-600">
+                  <div
+                    className="flex justify-between font-medium"
+                    style={{ color: '#2C68B0' }}
+                  >
                     <span>Discount (10%)</span>
-                    <span className="font-medium">-₹{discount.toFixed(2)}</span>
+                    <span>-₹{discount.toFixed(2)}</span>
                   </div>
                 )}
+
                 <div className="border-t pt-4">
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total</span>
-                    <span className="text-emerald-600">₹{total.toFixed(2)}</span>
+                    <span style={{ color: '#2C68B0' }}>
+                      ₹{total.toFixed(2)}
+                    </span>
                   </div>
                 </div>
               </div>
 
-              {/* Promotions */}
-              <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-lg p-4 mb-6">
-                {getCartTotal() > 1499 ? (
-                  <p className="text-sm text-emerald-700 font-medium">
-                    🎉 You're getting 10% OFF + FREE GIFT!
-                  </p>
-                ) : getCartTotal() > 999 ? (
-                  <p className="text-sm text-emerald-700">
-                    ✓ Free shipping unlocked! Add ₹{(1499 - getCartTotal()).toFixed(2)} more for 10% OFF + FREE GIFT
-                  </p>
-                ) : (
-                  <p className="text-sm text-gray-700">
-                    Add ₹{(999 - getCartTotal()).toFixed(2)} more for FREE shipping
-                  </p>
-                )}
+              {/* Promo */}
+              <div
+                className="rounded-lg p-4 mb-6 text-sm"
+                style={{ backgroundColor: '#EAF1FB', color: '#2C68B0' }}
+              >
+                {getCartTotal() > 1499
+                  ? "🎉 You're getting 10% OFF + FREE GIFT!"
+                  : getCartTotal() > 999
+                  ? `✓ Free shipping unlocked! Add ₹${(
+                      1499 - getCartTotal()
+                    ).toFixed(2)} more for 10% OFF`
+                  : `Add ₹${(999 - getCartTotal()).toFixed(
+                      2
+                    )} more for FREE shipping`}
               </div>
 
               <Button
                 onClick={handleCheckout}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 py-6 text-lg"
+                className="w-full py-6 text-lg"
+                style={{ backgroundColor: '#2C68B0' }}
               >
                 Proceed to Checkout <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
 
-              <Button
-                asChild
-                variant="outline"
-                className="w-full mt-3"
-              >
+              <Button asChild variant="outline" className="w-full mt-3">
                 <Link to="/products">Continue Shopping</Link>
               </Button>
             </div>
