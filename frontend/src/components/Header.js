@@ -35,9 +35,12 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b">
-      {/* Top Banner */}
-      <div className="bg-gradient-to-r from-blue-50 to-blue-100 py-2 text-center text-sm">
-        <p className="text-blue-800 font-medium">
+      {/* Top Offer Bar */}
+      <div
+        className="py-2 text-center text-sm"
+        style={{ backgroundColor: '#E6EFF6', color: '#275B83' }}
+      >
+        <p className="font-medium">
           FLAT 10% OFF + FREE GIFT on orders above ₹1499
         </p>
       </div>
@@ -46,60 +49,66 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
-              Birdcarts
-            </div>
+          <Link to="/" className="text-2xl font-bold" style={{ color: '#275B83' }}>
+            Birdcarts
           </Link>
 
-          {/* Search Bar - Desktop */}
-          <form onSubmit={handleSearch} className="hidden md:flex items-center flex-1 max-w-xl mx-8">
+          {/* Search - Desktop */}
+          <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-xl mx-8">
             <div className="relative w-full">
               <input
                 type="text"
                 placeholder="Search for products..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg
-                focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
+                className="w-full px-4 py-2 pr-10 border rounded-lg outline-none transition"
+                style={{
+                  borderColor: '#275B83',
+                }}
               />
               <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2">
-                <Search className="w-5 h-5 text-gray-400" />
+                <Search className="w-5 h-5" style={{ color: '#275B83' }} />
               </button>
             </div>
           </form>
 
-          {/* Right Actions */}
+          {/* Right Icons */}
           <div className="flex items-center space-x-4">
             {/* Wishlist */}
-            <Link to="/wishlist" className="relative hidden md:block hover:text-blue-600 transition-colors">
-              <Heart className="w-6 h-6" />
+            <Link to="/wishlist" className="relative hidden md:block">
+              <Heart className="w-6 h-6" style={{ color: '#275B83' }} />
               {wishlist.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                <span
+                  className="absolute -top-2 -right-2 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+                  style={{ backgroundColor: '#275B83' }}
+                >
                   {wishlist.length}
                 </span>
               )}
             </Link>
 
             {/* Cart */}
-            <Link to="/cart" className="relative hover:text-blue-600 transition-colors">
-              <ShoppingCart className="w-6 h-6" />
+            <Link to="/cart" className="relative">
+              <ShoppingCart className="w-6 h-6" style={{ color: '#275B83' }} />
               {getCartCount() > 0 && (
-                <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                <span
+                  className="absolute -top-2 -right-2 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+                  style={{ backgroundColor: '#275B83' }}
+                >
                   {getCartCount()}
                 </span>
               )}
             </Link>
 
-            {/* User Account */}
+            {/* User */}
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="hidden md:flex">
-                    <User className="w-6 h-6" />
+                  <Button variant="ghost" size="icon">
+                    <User className="w-6 h-6" style={{ color: '#275B83' }} />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuContent align="end">
                   <div className="px-2 py-1.5 text-sm font-semibold">{user?.name}</div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => navigate('/orders')}>
@@ -116,67 +125,48 @@ const Header = () => {
               </DropdownMenu>
             ) : (
               <Button
-                onClick={() => navigate('/login')}
                 variant="outline"
-                className="hidden md:flex border-blue-600 text-blue-600 hover:bg-blue-50"
+                onClick={() => navigate('/login')}
+                style={{ borderColor: '#275B83', color: '#275B83' }}
               >
                 Login
               </Button>
             )}
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 hover:bg-blue-50 rounded-lg transition-colors"
+              className="md:hidden p-2 rounded"
+              style={{ color: '#275B83' }}
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X /> : <Menu />}
             </button>
           </div>
         </div>
 
-        {/* Navigation Links - Desktop */}
-        <nav className="hidden md:flex items-center space-x-8 py-3 border-t">
-          <Link to="/products" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex space-x-8 py-3 border-t">
+          <Link to="/products" className="font-medium" style={{ color: '#275B83' }}>
             All Products
           </Link>
-          {categories.map((category) => (
+          {categories.map((cat) => (
             <Link
-              key={category.id}
-              to={`/products?category=${category.id}`}
-              className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+              key={cat.id}
+              to={`/products?category=${cat.id}`}
+              className="font-medium"
+              style={{ color: '#275B83' }}
             >
-              {category.name}
+              {cat.name}
             </Link>
           ))}
-          <Link to="/about" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+          <Link to="/about" className="font-medium" style={{ color: '#275B83' }}>
             About Us
           </Link>
-          <Link to="/contact" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+          <Link to="/contact" className="font-medium" style={{ color: '#275B83' }}>
             Contact
           </Link>
         </nav>
       </div>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t">
-          <form onSubmit={handleSearch} className="p-4">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search for products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg
-                focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2">
-                <Search className="w-5 h-5 text-gray-400" />
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
     </header>
   );
 };
